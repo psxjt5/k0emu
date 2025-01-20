@@ -37,8 +37,17 @@ def main():
 
             # interrupt masks
             binary = lambda x: bin(x)[2:].rjust(8, '0')
-            for address in range(0xffe4, 0xffe8): # interrupt masks
-                line += " %04x=%s" % (address, binary(proc.memory[address]))
+            binary4 = lambda x: bin(x)[2:].rjust(4, '0')
+            #for address in range(0xffe4, 0xffe8): # interrupt masks
+            #    line += " %04x=%s" % (address, binary(proc.memory[address]))
+            #print(line)
+			
+			# Port Mode Registers
+            line += " P12=%s" % (binary4(proc.memory[0xff0c]));
+            line += " P12M=%s" % (binary4(proc.memory[0xff2c]));
+            line += " P5=%s" % (binary4(proc.memory[0xff05]));
+            line += " P5M=%s" % (binary4(proc.memory[0xff25]));
+			
             print(line)
 
             for message in proc.messages:
